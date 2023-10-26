@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.catan.HelloController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane fx:id="anchorPane1" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <Polygon fill="WHITE" layoutX="269.0" layoutY="136.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="347.0" layoutY="136.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="386.0" layoutY="200.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="425.0" layoutY="264.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="386.0" layoutY="326.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="347.0" layoutY="390.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="270.0" layoutY="391.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="193.0" layoutY="391.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="153.0" layoutY="327.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="114.0" layoutY="263.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="153.0" layoutY="199.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="192.0" layoutY="135.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="230.0" layoutY="199.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="269.0" layoutY="263.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="308.0" layoutY="199.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="347.0" layoutY="263.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="308.0" layoutY="326.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="230.0" layoutY="327.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Polygon fill="WHITE" layoutX="191.0" layoutY="263.0" points="-21.999969482421875, 1.0, 17.6666259765625, -20.0, 17.6666259765625, -64.66667175292969, -21.999969482421875, -85.99998474121094, -61.666656494140625, -64.66667175292969, -61.666656494140625, -20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+            <Button fx:id="btnNextTurn" layoutX="642.0" layoutY="36.0" mnemonicParsing="false" onAction="#nextTurn" text="Next turn" />
+            <Button fx:id="btnHouse4x12" layoutX="277.0" layoutY="105.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse6x14" layoutX="316.0" layoutY="129.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse6x10" layoutX="239.0" layoutY="129.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse4x8" layoutX="201.0" layoutY="105.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse6x6" layoutX="161.0" layoutY="129.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse8x10" layoutX="238.0" layoutY="171.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x12" layoutX="278.0" layoutY="191.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse8x14" layoutX="316.0" layoutY="171.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x8" layoutX="199.0" layoutY="191.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse8x6" layoutX="161.0" layoutY="171.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x16" layoutX="356.0" layoutY="192.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse14x14" layoutX="317.0" layoutY="255.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x12" layoutX="278.0" layoutY="233.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x16" layoutX="356.0" layoutY="233.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse14x10" layoutX="239.0" layoutY="255.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x4" layoutX="121.0" layoutY="233.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse14x6" layoutX="161.0" layoutY="255.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x8" layoutX="199.0" layoutY="233.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse16x14" layoutX="316.0" layoutY="297.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse18x12" layoutX="278.0" layoutY="319.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse16x10" layoutX="239.0" layoutY="299.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse16x6" layoutX="161.0" layoutY="297.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse18x8" layoutX="201.0" layoutY="319.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x4" layoutX="121.0" layoutY="189.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x13" layoutX="297.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x13" layoutX="298.0" layoutY="181.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad7x10" layoutX="238.0" layoutY="150.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x12" layoutX="278.0" layoutY="212.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x7" layoutX="180.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x16" layoutX="356.0" layoutY="212.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad15x14" layoutX="317.0" layoutY="276.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x13" layoutX="298.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x7" layoutX="181.0" layoutY="309.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x4" layoutX="121.0" layoutY="212.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x9" layoutX="220.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad7x6" layoutX="161.0" layoutY="150.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad7x14" layoutX="316.0" layoutY="149.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x9" layoutX="218.0" layoutY="181.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x15" layoutX="337.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad15x6" layoutX="161.0" layoutY="274.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x5" layoutX="141.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x11" layoutX="258.0" layoutY="308.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x13" layoutX="298.0" layoutY="308.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x11" layoutX="259.0" layoutY="244.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x9" layoutX="220.0" layoutY="309.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x5" layoutX="141.0" layoutY="181.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x11" layoutX="259.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x7" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x15" layoutX="337.0" layoutY="182.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x11" layoutX="258.0" layoutY="181.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x8" layoutX="199.0" layoutY="212.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad15x10" layoutX="239.0" layoutY="277.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x9" layoutX="219.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x7" layoutX="180.0" layoutY="180.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="img7x8" fitHeight="30.0" fitWidth="30.0" layoutX="194.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img7x12" fitHeight="30.0" fitWidth="30.0" layoutX="270.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img11x14" fitHeight="30.0" fitWidth="30.0" layoutX="311.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img11x10" fitHeight="30.0" fitWidth="30.0" layoutX="231.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img11x6" fitHeight="30.0" fitWidth="30.0" layoutX="154.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img15x8" fitHeight="30.0" fitWidth="30.0" layoutX="191.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img15x12" fitHeight="30.0" fitWidth="30.0" layoutX="271.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgWood0" fitHeight="50.0" fitWidth="50.0" layoutX="111.0" layoutY="499.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/WOOD.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgBrick0" fitHeight="50.0" fitWidth="50.0" layoutX="168.0" layoutY="498.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/BRICK.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgWheat0" fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="498.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/WHEAT.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgSheep0" fitHeight="50.0" fitWidth="50.0" layoutX="282.0" layoutY="498.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/SHEEP.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgStone0" fitHeight="50.0" fitWidth="50.0" layoutX="338.0" layoutY="498.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/STONE.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="textResourceWood0" layoutX="114.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WOOD: 0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceBrick0" layoutX="168.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BRICK: 0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceWheat0" layoutX="226.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WHEAT: 0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceSheep0" layoutX="281.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHEEP: 0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceStone0" layoutX="338.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STONE: 0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="imgDice1" fitHeight="40.0" fitWidth="40.0" layoutX="443.0" layoutY="502.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image></ImageView>
+            <ImageView fx:id="imgDice2" fitHeight="40.0" fitWidth="40.0" layoutX="508.0" layoutY="503.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image></ImageView>
+            <ImageView fx:id="img3x6" fitHeight="30.0" fitWidth="30.0" layoutX="153.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img3x10" fitHeight="30.0" fitWidth="30.0" layoutX="230.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img3x14" fitHeight="30.0" fitWidth="30.0" layoutX="312.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img7x16" fitHeight="30.0" fitWidth="30.0" layoutX="350.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img7x4" fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img11x2" fitHeight="30.0" fitWidth="30.0" layoutX="76.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img11x18" fitHeight="30.0" fitWidth="30.0" layoutX="390.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img15x16" fitHeight="30.0" fitWidth="30.0" layoutX="348.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img15x4" fitHeight="30.0" fitWidth="30.0" layoutX="116.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img19x6" fitHeight="30.0" fitWidth="30.0" layoutX="154.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img19x10" fitHeight="30.0" fitWidth="30.0" layoutX="232.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img19x14" fitHeight="30.0" fitWidth="30.0" layoutX="311.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/1.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnHouse0x6" layoutX="161.0" layoutY="42.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse0x10" layoutX="237.0" layoutY="42.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse0x14" layoutX="315.0" layoutY="43.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse2x16" layoutX="355.0" layoutY="62.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse4x16" layoutX="355.0" layoutY="109.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse6x18" layoutX="394.0" layoutY="128.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x20" layoutX="433.0" layoutY="192.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x20" layoutX="433.0" layoutY="236.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse14x18" layoutX="394.0" layoutY="255.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse18x16" layoutX="355.0" layoutY="318.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse16x18" layoutX="394.0" layoutY="298.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse22x14" layoutX="318.0" layoutY="382.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse20x16" layoutX="355.0" layoutY="360.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse20x12" layoutX="278.0" layoutY="362.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse22x10" layoutX="240.0" layoutY="384.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse20x8" layoutX="201.0" layoutY="361.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse22x6" layoutX="162.0" layoutY="384.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse20x4" layoutX="124.0" layoutY="365.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse18x4" layoutX="123.0" layoutY="320.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse16x2" layoutX="83.0" layoutY="299.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse14x2" layoutX="83.0" layoutY="254.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse12x0" layoutX="45.0" layoutY="236.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse10x0" layoutX="44.0" layoutY="193.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse8x2" layoutX="84.0" layoutY="170.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse6x2" layoutX="84.0" layoutY="128.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse4x4" layoutX="123.0" layoutY="105.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse2x4" layoutX="123.0" layoutY="62.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad3x4" layoutX="123.0" layoutY="83.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x5" layoutX="142.0" layoutY="52.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x7" layoutX="180.0" layoutY="52.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse2x8" layoutX="200.0" layoutY="62.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse2x12" layoutX="277.0" layoutY="63.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnHouse8x18" layoutX="394.0" layoutY="173.0" mnemonicParsing="false" onAction="#townButtonPressed" text="🏠" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad3x8" layoutX="201.0" layoutY="84.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x9" layoutX="219.0" layoutY="53.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x11" layoutX="258.0" layoutY="54.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad3x12" layoutX="277.0" layoutY="84.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x13" layoutX="297.0" layoutY="54.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad1x15" layoutX="335.0" layoutY="53.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad3x16" layoutX="355.0" layoutY="85.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x17" layoutX="375.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x15" layoutX="335.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad7x18" layoutX="394.0" layoutY="150.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x19" layoutX="414.0" layoutY="182.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x17" layoutX="372.0" layoutY="180.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x20" layoutX="433.0" layoutY="214.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x17" layoutX="374.0" layoutY="243.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x19" layoutX="414.0" layoutY="246.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad15x18" layoutX="394.0" layoutY="277.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x17" layoutX="375.0" layoutY="308.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x15" layoutX="335.0" layoutY="308.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad19x16" layoutX="355.0" layoutY="340.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x15" layoutX="337.0" layoutY="372.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x13" layoutX="298.0" layoutY="373.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad19x12" layoutX="278.0" layoutY="342.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x11" layoutX="260.0" layoutY="373.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x9" layoutX="221.0" layoutY="373.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad19x8" layoutX="202.0" layoutY="341.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x7" layoutX="182.0" layoutY="374.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad21x5" layoutX="143.0" layoutY="373.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad19x4" layoutX="124.0" layoutY="342.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x5" layoutX="141.0" layoutY="309.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad17x3" layoutX="105.0" layoutY="308.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x3" layoutX="102.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x3" layoutX="103.0" layoutY="180.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x3" layoutX="105.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad7x2" layoutX="84.0" layoutY="150.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad9x1" layoutX="64.0" layoutY="181.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad11x0" layoutX="44.0" layoutY="214.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad13x1" layoutX="64.0" layoutY="245.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad15x2" layoutX="83.0" layoutY="277.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRoad5x5" layoutX="141.0" layoutY="117.0" mnemonicParsing="false" onAction="#roadButtonPressed" text="🛣" textFill="BLACK">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
+            <Text fx:id="textResource3x14" layoutX="320.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource3x10" layoutX="240.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource15x8" layoutX="203.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource7x4" layoutX="127.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource7x8" layoutX="204.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource7x12" layoutX="283.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource7x16" layoutX="360.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource11x2" layoutX="86.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource11x6" layoutX="166.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource11x10" layoutX="242.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource11x14" layoutX="320.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource11x18" layoutX="397.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource3x6" layoutX="164.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource15x4" layoutX="126.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource15x12" layoutX="281.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource15x16" layoutX="359.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource19x6" layoutX="165.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource19x10" layoutX="242.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResource19x14" layoutX="320.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="textAreaError" layoutX="594.0" layoutY="486.0" prefHeight="73.0" prefWidth="186.0" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font></TextArea>
+            <ImageView fx:id="imgWood1" fitHeight="30.0" fitWidth="30.0" layoutX="601.0" layoutY="400.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/WOOD.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgBrick1" fitHeight="30.0" fitWidth="30.0" layoutX="640.0" layoutY="399.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/BRICK.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgWheat1" fitHeight="30.0" fitWidth="30.0" layoutX="681.0" layoutY="399.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/WHEAT.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgSheep1" fitHeight="30.0" fitWidth="30.0" layoutX="720.0" layoutY="399.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/SHEEP.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgStone1" fitHeight="30.0" fitWidth="30.0" layoutX="761.0" layoutY="399.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/STONE.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="textResourceWood1" layoutX="603.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WOOD: 0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceBrick1" layoutX="639.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BRICK: 0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceWheat1" layoutX="681.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WHEAT: 0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceSheep1" layoutX="718.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHEEP: 0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Text>
+            <Text fx:id="textResourceStone1" layoutX="760.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STONE: 0">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Text>
+            <Circle fx:id="circle1" fill="RED" layoutX="584.0" layoutY="414.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circle0" fill="BLUE" layoutX="83.0" layoutY="523.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
