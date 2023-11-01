@@ -1,29 +1,26 @@
 package hr.algebra.catan.Objects;
 
 import hr.algebra.catan.ResourcesType;
-import hr.algebra.catan.Objects.GameObject;
 import javafx.scene.paint.Color;
 
-import static hr.algebra.catan.HelloController.objectGameBoard;
+import static hr.algebra.catan.HelloController.tileGameBoard;
 
 public class Town extends GameObject{
-    private final Color townColor;
-    public Town(int row, int col, Color townColor) {
-        super(row, col);
-        this.townColor = townColor;
+
+    public Town(int row, int col, Color color) {
+        super(row, col, color);
     }
 
     public void getResources(Player player, int diceTotal, int numSum) {
         for (int r = -3; r <= 3; r++) {
             for (int c = -2; c <= 2; c++) {
-                //System.out.println((getRow() +r)+ " ! " + (getCol() + c));
                 try {
-                    if (objectGameBoard[getRow() + r][getCol() + c].getClass().equals(ResourceTile.class)) {
-                        ResourceTile tile = (ResourceTile) objectGameBoard[getRow() + r][getCol() + c];
+                    //MAKE SURE ITS A RESOURCE TILE
+                    if (tileGameBoard[getRow() + r][getCol() + c].getResourceTile().getClass().equals(ResourceTile.class)) {
+                        ResourceTile tile = tileGameBoard[getRow() + r][getCol() + c].getResourceTile();
                         int number = tile.getNumberResource();
                         if(number == diceTotal){
                             ResourcesType type = tile.getResource();
-                            System.out.println("town in "+ getRow() + " "+ getCol() + " got: " + type);
                             switch (type){
                                 case WOOD:
                                     player.setNumWood(player.getNumWood() + numSum);
@@ -41,15 +38,16 @@ public class Town extends GameObject{
                                     player.setNumStone(player.getNumStone() + numSum);
                                     break;
                                 default:
-                                    System.out.println("wierd tile error");
+                                    //System.out.println("wierd tile error");
                             }
                         }
                     }
                 }
-                catch (Exception e){
+                catch (Exception ignore){
 
                 }
             }
         }
     }
+
 }

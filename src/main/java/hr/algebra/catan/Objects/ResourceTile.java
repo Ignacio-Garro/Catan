@@ -1,13 +1,14 @@
 package hr.algebra.catan.Objects;
 
 import hr.algebra.catan.ResourcesType;
+import javafx.scene.paint.Color;
 
 public class ResourceTile extends GameObject{
 
     private ResourcesType resource;
     private int numberResource;
-    public ResourceTile(int row, int col, ResourcesType resource, int numberResource) {
-        super(row, col);
+    public ResourceTile(int row, int col, Color color, ResourcesType resource, int numberResource) {
+        super(row, col, color);
         this.resource = resource;
         this.numberResource = numberResource;
     }

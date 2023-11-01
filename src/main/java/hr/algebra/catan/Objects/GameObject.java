@@ -1,13 +1,17 @@
 package hr.algebra.catan.Objects;
 
+import javafx.scene.paint.Color;
+
 public class GameObject {
 
     private int row;
     private int col;
+    private Color color;
 
-    public GameObject(int row, int col){
+    public GameObject(int row, int col, Color color){
         this.row = row;
         this.col = col;
+        this.color = color;
     }
 
     public void setPosition(int row, int col){
@@ -28,5 +32,12 @@ public class GameObject {
 
     public int getRow() {
         return row;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
