@@ -1,14 +1,16 @@
-package hr.algebra.catan.Objects;
+package hr.algebra.catan.Model.Objects;
 
-import hr.algebra.catan.ResourcesType;
+import hr.algebra.catan.Model.ResourcesType;
 import javafx.scene.paint.Color;
 
-import static hr.algebra.catan.HelloController.tileGameBoard;
+import static hr.algebra.catan.Controller.GameController.tileGameBoard;
 
 public class Town extends GameObject{
 
-    public Town(int row, int col, Color color) {
+    private int numberOfResourcesFromUpgrade;
+    public Town(int row, int col, Color color, int upgraded) {
         super(row, col, color);
+        this.numberOfResourcesFromUpgrade = upgraded;
     }
 
     public void getResources(Player player, int diceTotal, int numSum) {
@@ -50,4 +52,11 @@ public class Town extends GameObject{
         }
     }
 
+    public int getNumberOfResourcesFromUpgrade() {
+        return numberOfResourcesFromUpgrade;
+    }
+
+    public void setNumberOfResourcesFromUpgrade(int numberOfResourcesFromUpgrade) {
+        this.numberOfResourcesFromUpgrade = numberOfResourcesFromUpgrade;
+    }
 }

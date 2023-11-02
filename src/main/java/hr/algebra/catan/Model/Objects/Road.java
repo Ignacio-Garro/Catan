@@ -1,4 +1,4 @@
-package hr.algebra.catan.Objects;
+package hr.algebra.catan.Model.Objects;
 
 import javafx.scene.paint.Color;
 

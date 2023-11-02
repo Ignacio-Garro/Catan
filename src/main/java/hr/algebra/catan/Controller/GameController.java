@@ -1,6 +1,8 @@
-package hr.algebra.catan;
+package hr.algebra.catan.Controller;
 
-import hr.algebra.catan.Objects.*;
+import hr.algebra.catan.Model.Objects.*;
+import hr.algebra.catan.Model.ResourcesType;
+import hr.algebra.catan.Model.Tile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,7 +17,7 @@ import javafx.scene.text.Text;
 
 import java.util.Random;
 
-public class HelloController {
+public class GameController {
     public int diceTotal;
     @FXML
     private ToggleButton tglbtnCheats;
@@ -395,21 +397,17 @@ public class HelloController {
     private static final Integer NUM_OF_ROWS = 23;
     private static final Integer NUM_OF_COLS = 21;
     private static final Integer POINTS_TO_WIN = 5;
-    public static Tile [][] tileGameBoard;
-    public static boolean CHEATS = false;
-    public static boolean setUpDone = false;
-    public static boolean gameFinished = false;
-    public Town lastTownPlaced;
-    public ResourcesType resource;
-    public Player playerTurn;
-    public Player bluePlayer;
-    public Player redPlayer;
-    public Color blueColor = Color.rgb(0, 0, 255, 1);
-    public Color redColor = Color.rgb(255, 0, 0, 1);
-
-    public int dice1;
-    public int dice2;
-
+    public static Tile[][] tileGameBoard;
+    private static boolean CHEATS = false;
+    private static boolean setUpDone = false;
+    private static boolean gameFinished = false;
+    private ResourcesType resource;
+    private Player playerTurn;
+    private Player bluePlayer;
+    private Player redPlayer;
+    private final Color blueColor = Color.rgb(0, 0, 255, 1);
+    private final Color redColor = Color.rgb(255, 0, 0, 1);
+    private final String CityEmoji = "🏢";
 
 
     public void initialize() {
@@ -816,7 +814,6 @@ public class HelloController {
                     }
                 }
                 catch (Exception ignored) {
-
                 }
             }
         }
@@ -858,9 +855,9 @@ public class HelloController {
             if(setUpDone){
                 //get dice roles
                 Random random = new Random();
-                dice1 = random.nextInt(6) + 1;
+                int dice1 = random.nextInt(6) + 1;
                 random = new Random();
-                dice2 = random.nextInt(6) + 1;
+                int dice2 = random.nextInt(6) + 1;
                 diceTotal = dice1 + dice2;
 
                 //display dice roll
@@ -874,10 +871,10 @@ public class HelloController {
 
             //get resources from dice role
             for (Town town : bluePlayer.getTownList()) {
-                town.getResources(bluePlayer, diceTotal, 1);
+                town.getResources(bluePlayer, diceTotal, town.getNumberOfResourcesFromUpgrade());
             }
             for (Town town : redPlayer.getTownList()) {
-                town.getResources(redPlayer, diceTotal, 1);
+                town.getResources(redPlayer, diceTotal, town.getNumberOfResourcesFromUpgrade());
             }
             refreshResources();
             refreshPoints();
@@ -947,6 +944,25 @@ public class HelloController {
                 }
             }
         }
+        //TRY TO UPGRADE TOWN TO CITY
+        else{
+            //IT IS A TOW AND IT IS THE SAME COLOR
+            if(tileGameBoard[row][col].getGameObject().getClass().equals(Town.class) && tileGameBoard[row][col].getGameObject().getColor() == playerTurn.getPlayerColor()){
+                //COST
+                if((playerTurn.getNumWheat() >= 2 && playerTurn.getNumStone() >= 3)) {
+                    playerTurn.setNumWheat(playerTurn.getNumWheat() - 2);
+                    playerTurn.setNumSheep(playerTurn.getNumStone() - 3);
+                    //PLACE THE TOWN AND ADD IT TO LOGIC
+                    placeCity(row, col, clickedButton);
+                }
+                else if(CHEATS){
+                    placeCity(row, col, clickedButton);
+                }
+                else {
+                    textAreaError.setText("cant afford City upgrade");
+                }
+            }
+        }
     }
 
     public void roadButtonPressed(ActionEvent event) {
@@ -1013,13 +1029,12 @@ public class HelloController {
     private void placeTown(int row, int col, Button clickedButton){
         clickedButton.setTextFill(playerTurn.getPlayerColor());
         //LOGIC
-        Town town = new Town(row, col, playerTurn.getPlayerColor());
+        Town town = new Town(row, col, playerTurn.getPlayerColor(), 1);
         tileGameBoard[row][col].setGameObject(town);
 
         playerTurn.setNumPoints(playerTurn.getNumPoints() + 1);
         playerTurn.setNumTowns(playerTurn.getNumTowns() + 1);
         playerTurn.addTownList(town);
-        lastTownPlaced = town;
 
         refreshResources();
         refreshPoints();
@@ -1027,6 +1042,21 @@ public class HelloController {
         textAreaError.setText("town placed in row " + row + " and column " + col);
     }
 
+    private void placeCity(int row, int col, Button clickedButton) {
+        clickedButton.setText(CityEmoji);
+        //LOGIC
+        Town town = (Town) tileGameBoard[row][col].getGameObject();
+        town.setNumberOfResourcesFromUpgrade(2);
+
+        playerTurn.setNumPoints(playerTurn.getNumPoints() + 1);
+        playerTurn.setNumTowns(playerTurn.getNumTowns() - 1);
+        playerTurn.setNumTowns(playerTurn.getNumCities() + 1);
+
+        refreshResources();
+        refreshPoints();
+        checkWinner();
+        textAreaError.setText("town placed in row " + row + " and column " + col);
+    }
     private void placeRoad(int row, int col, Button clickedButton) {
         //PLACE ROAD BOTH VISUAL AND LOGIC
         Road road = new Road(row, col, playerTurn.getPlayerColor());

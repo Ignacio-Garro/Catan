@@ -1,7 +1,7 @@
-package hr.algebra.catan;
+package hr.algebra.catan.Model;
 
-import hr.algebra.catan.Objects.GameObject;
-import hr.algebra.catan.Objects.ResourceTile;
+import hr.algebra.catan.Model.Objects.GameObject;
+import hr.algebra.catan.Model.Objects.ResourceTile;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;

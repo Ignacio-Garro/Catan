@@ -1,6 +1,6 @@
-package hr.algebra.catan.Objects;
+package hr.algebra.catan.Model.Objects;
 
-import hr.algebra.catan.ResourcesType;
+import hr.algebra.catan.Model.ResourcesType;
 import javafx.scene.paint.Color;
 
 public class ResourceTile extends GameObject{

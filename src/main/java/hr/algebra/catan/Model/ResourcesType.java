@@ -1,4 +1,4 @@
-package hr.algebra.catan;
+package hr.algebra.catan.Model;
 
 public enum ResourcesType {
     WOOD(4),
