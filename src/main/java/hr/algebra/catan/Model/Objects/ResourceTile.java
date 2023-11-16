@@ -3,12 +3,14 @@ package hr.algebra.catan.Model.Objects;
 import hr.algebra.catan.Model.ResourcesType;
 import javafx.scene.paint.Color;
 
-public class ResourceTile extends GameObject{
+import java.io.Serializable;
+
+public class ResourceTile extends GameObject implements Serializable {
 
     private ResourcesType resource;
     private int numberResource;
-    public ResourceTile(int row, int col, Color color, ResourcesType resource, int numberResource) {
-        super(row, col, color);
+    public ResourceTile(int row, int col, String stringColor, String icon, ResourcesType resource, int numberResource) {
+        super(row, col, stringColor, icon);
         this.resource = resource;
         this.numberResource = numberResource;
     }

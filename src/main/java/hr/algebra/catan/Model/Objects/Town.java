@@ -8,8 +8,8 @@ import static hr.algebra.catan.Controller.GameController.tileGameBoard;
 public class Town extends GameObject{
 
     private int numberOfResourcesFromUpgrade;
-    public Town(int row, int col, Color color, int upgraded) {
-        super(row, col, color);
+    public Town(int row, int col, String stringColor, String icon, int upgraded) {
+        super(row, col, stringColor, icon);
         this.numberOfResourcesFromUpgrade = upgraded;
     }
 

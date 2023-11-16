@@ -1,12 +1,12 @@
 package hr.algebra.catan.Model.Objects;
 
-import javafx.scene.paint.Color;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 
-    private final Color playerColor;
+    private final String stringPlayerColor; // Color is not serializable
+
     private int numPoints;
     private int numTowns;
     private int numCities;
@@ -16,14 +16,11 @@ public class Player {
     private int numStone;
     private int numWheat;
     private int numWood;
-
-    private boolean placedStartingPosition;
     private ArrayList<Town> townList;
 
-    public Player(Color playerColor, int numPoints, int numTowns, int numCities, int numRoads, int numBrick, int numSheep, int numStone, int numWheat, int numWood){
-        this.placedStartingPosition = false;
+    public Player(String playerColor, int numPoints, int numTowns, int numCities, int numRoads, int numBrick, int numSheep, int numStone, int numWheat, int numWood){
         this.townList = new ArrayList<>();
-        this.playerColor = playerColor;
+        this.stringPlayerColor = playerColor;
         this.numPoints = numPoints;
         this.numTowns = numTowns;
         this.numCities = numCities;
@@ -67,8 +64,8 @@ public class Player {
         this.numRoads = numRoads;
     }
 
-    public Color getPlayerColor() {
-        return playerColor;
+    public String getStringPlayerColor() {
+        return stringPlayerColor;
     }
 
     public int getNumBrick() {
@@ -121,13 +118,17 @@ public class Player {
     public void removeTownList(Town town) {
         this.townList.remove(town);
     }
-
-    public boolean getPlacedStartingPosition() {
-        return placedStartingPosition;
-    }
-
-    public void setPlacedStartingPosition(boolean placedStartingPosition) {
-        this.placedStartingPosition = placedStartingPosition;
+    public void resetValues(){
+        this.townList.clear();
+        this.numPoints = 0;
+        this.numTowns = 0;
+        this.numCities = 0;
+        this.numRoads = 0;
+        this.numBrick = 0;
+        this.numSheep = 0;
+        this.numStone = 0;
+        this.numWheat = 0;
+        this.numWood = 0;
     }
 
 }

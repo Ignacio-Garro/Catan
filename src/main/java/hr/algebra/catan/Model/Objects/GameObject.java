@@ -1,17 +1,19 @@
 package hr.algebra.catan.Model.Objects;
 
-import javafx.scene.paint.Color;
+import java.io.Serializable;
 
-public class GameObject {
+public class GameObject implements Serializable {
 
     private int row;
     private int col;
-    private Color color;
+    private String stringColor;
+    private String icon;
 
-    public GameObject(int row, int col, Color color){
+    public GameObject(int row, int col, String stringColor, String icon){
         this.row = row;
         this.col = col;
-        this.color = color;
+        this.stringColor = stringColor;
+        this.icon = icon;
     }
 
     public void setPosition(int row, int col){
@@ -34,10 +36,19 @@ public class GameObject {
         return row;
     }
 
-    public Color getColor() {
-        return color;
+    public String getIcon() {
+        return icon;
     }
-    public void setColor(Color color) {
-        this.color = color;
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getStringColor() {
+        return stringColor;
+    }
+
+    public void setStringColor(String stringColor) {
+        this.stringColor = stringColor;
     }
 }

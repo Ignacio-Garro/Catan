@@ -18,21 +18,17 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Game">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+               <MenuItem mnemonicParsing="false" onAction="#load" text="Load" />
+               <MenuItem mnemonicParsing="false" onAction="#newGame" text="New game" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+          <Menu mnemonicParsing="false" text="Documentation">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#generateDoc" text="Generate Doc" />
+               </items></Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="anchorPane1" prefHeight="720.0" prefWidth="1280.0">
@@ -866,7 +862,7 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Text>
-            <Text fx:id="textResource11x2" layoutX="387.0" layoutY="369.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="7" textAlignment="CENTER">
+            <Text fx:id="textResource11x2" layoutX="396.0" layoutY="374.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="7" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="27.0" />
                </font>
@@ -930,7 +926,7 @@
                <font>
                   <Font size="10.0" />
                </font></TextArea>
-            <ToggleButton fx:id="tglbtnCheats" layoutX="1128.0" layoutY="493.0" mnemonicParsing="false" onAction="#CheatButtonPressed" prefHeight="26.0" prefWidth="99.0" text="Cheats" />
+            <ToggleButton fx:id="tglbtnCheats" layoutX="1128.0" layoutY="493.0" mnemonicParsing="false" onAction="#cheatButtonPressed" prefHeight="26.0" prefWidth="99.0" text="Cheats" />
             <ImageView fx:id="imgWood01" fitHeight="25.0" fitWidth="25.0" layoutX="1159.0" layoutY="54.0" pickOnBounds="true">
                <image>
                   <Image url="@Images/cards/wood_card.png" />
