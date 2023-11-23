@@ -4,6 +4,7 @@ import hr.algebra.catan.Model.GameBoard;
 import hr.algebra.catan.Model.Objects.*;
 import hr.algebra.catan.Model.ResourcesType;
 import hr.algebra.catan.Model.Tile;
+import hr.algebra.catan.Utils.ReflectionUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -18,7 +19,9 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -433,11 +436,8 @@ public class GameController {
 
         placeTiles();
         BoardResourcesIni();
-
-        generateDoc();
     }
-
-    private void placeTiles() {
+    public void placeTiles() {
         //TOWNS
         tileGameBoard[0][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 0,6);
         tileGameBoard[0][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 0, 10);
@@ -799,35 +799,30 @@ public class GameController {
         tileGameBoard[19][10].setResourceTile(new ResourceTile(19, 10, null,null, null, -1));
         tileGameBoard[19][14].setResourceTile(new ResourceTile(19, 14, null,null, null, -1));
     }
-
     public void BoardResourcesIni() {
         Image image;
         refreshResources();
 
         for(int r = 3; r < NUM_OF_ROWS; r = r + 4){
             for(int c = 2; c < NUM_OF_COLS - 1; c = c + 2){
-                try{
-                    if(tileGameBoard[r][c].getResourceTile() != null && (r != 11 || c != 10)){
-                        //get resource
+                if(tileGameBoard[r][c] != null && tileGameBoard[r][c].getResourceTile() != null && (r != 11 || c != 10)){
+                    //get resource
+                    resource = getRandomResource();
+                    while (resource.getNumTilesInBoard() == 0){
                         resource = getRandomResource();
-                        while (resource.getNumTilesInBoard() == 0){
-                            resource = getRandomResource();
-                        }
-                        resource.setNumTilesInBoard(resource.getNumTilesInBoard() - 1);
-
-                        image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource +".png"); // You can also use a URL or an input stream
-                        tileGameBoard[r][c].getImageView().setImage(image);
-                        tileGameBoard[r][c].getResourceTile().setResource(resource);
-                        // Generate a random number between 2 and 12 (inclusive)
-                        Random random = new Random();
-                        int lowerBound = 2;
-                        int upperBound = 12;
-                        int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
-                        tileGameBoard[r][c].getResourceTile().setNumberResource(randomNumber);
-                        tileGameBoard[r][c].getResourceNumber().setText((String.valueOf(randomNumber)));
                     }
-                }
-                catch (Exception ignored) {
+                    resource.setNumTilesInBoard(resource.getNumTilesInBoard() - 1);
+
+                    image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource +".png"); // You can also use a URL or an input stream
+                    tileGameBoard[r][c].getImageView().setImage(image);
+                    tileGameBoard[r][c].getResourceTile().setResource(resource);
+                    // Generate a random number between 2 and 12 (inclusive)
+                    Random random = new Random();
+                    int lowerBound = 2;
+                    int upperBound = 12;
+                    int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+                    tileGameBoard[r][c].getResourceTile().setNumberResource(randomNumber);
+                    tileGameBoard[r][c].getResourceNumber().setText((String.valueOf(randomNumber)));
                 }
             }
         }
@@ -907,16 +902,11 @@ public class GameController {
         int col = -1;
         for (int i = 0; i < NUM_OF_ROWS; i++) {
             for (int j = 0; j < NUM_OF_COLS; j++) {
-                try{
-                    if (tileGameBoard[i][j].getButton() == clickedButton) {
-                        row = i;
-                        col = j;
-                        break;
-                    }
-                } catch (Exception ignored) {
-
+                if (tileGameBoard[i][j] != null && tileGameBoard[i][j].getButton() != null && tileGameBoard[i][j].getButton() == clickedButton) {
+                    row = i;
+                    col = j;
+                    break;
                 }
-
             }
             if (row != -1) {
                 break;
@@ -990,16 +980,11 @@ public class GameController {
         int col = -1;
         for (int i = 0; i < NUM_OF_ROWS; i++) {
             for (int j = 0; j < NUM_OF_COLS; j++) {
-                try{
-                    if (tileGameBoard[i][j].getButton() == clickedButton) {
+                if (tileGameBoard[i][j] != null && tileGameBoard[i][j].getButton() != null && tileGameBoard[i][j].getButton() == clickedButton) {
                         row = i;
                         col = j;
                         break;
                     }
-                } catch (Exception ignored) {
-
-                }
-
             }
             if (row != -1) {
                 break;
@@ -1088,65 +1073,56 @@ public class GameController {
         checkWinner();
         textAreaError.setText("road placed is in row " + row + " and column " + col);
     }
-
     private boolean TownProximityRule(int row, int col) {
         for(int r = -2; r < 4; r = r + 2){ // -2 0 2
             for(int c = -2; c < 4; c = c + 2){
-                try{
-                    if(tileGameBoard[row + r][col + c].getGameObject().getClass().equals(Town.class)){
+                if((row+r) >= 0 && (row+r) < NUM_OF_ROWS && (col + c) >= 0 && (col + c) < NUM_OF_COLS &&
+                        tileGameBoard[row + r][col + c] != null &&
+                        tileGameBoard[row + r][col + c].getGameObject() != null &&
+                        tileGameBoard[row + r][col + c].getGameObject().getClass().equals(Town.class)){
                         return false;
                     }
-                }
-                catch (Exception ignored){
-                }
-
             }
         }
 
         return true;
     }
-
     private boolean isRoadConnectedByTownOrRoad(int row, int col, Color playerColor) {
         int yAxis= -1;
         int xAxis= -1;
         while (yAxis <= 1){
             while (xAxis <= 1){
-                try{
-                    //THERE IS A TOWN HERE
-                    if(tileGameBoard[row + yAxis][col +  xAxis].getButton() != null){
-                        //TOWN IS PLACED
-                        if(tileGameBoard[row + yAxis][col +  xAxis].getGameObject() != null){
-                            //TOWN IS OF THE PLAYER
-                            if(stringToColor(tileGameBoard[row + yAxis][col +  xAxis].getGameObject().getStringColor()) == playerColor){
-                                return true;
-                            }
-                        }
-                        //TOWN NOT PLACED
-                        else{
-                            //TRY TO SEE IF THERE IS A ROAD THAT CONNECTS
-                            int yAxis2= -1;
-                            int xAxis2= -1;
-                            while (yAxis2 < 2){
-                                while (xAxis2 < 2){
-                                    try{
-                                        //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
-                                        if(tileGameBoard[row + yAxis + yAxis2][col +  xAxis +  xAxis2].getGameObject().getClass().equals(Road.class) && stringToColor(tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2].getGameObject().getStringColor()) == playerColor){
-                                            return true;
-                                        }
-                                    }
-                                    catch (Exception ignored){
-                                    }
-                                    xAxis2++;
-                                }
-                                yAxis2++;
-                                xAxis2 = -1;
-                            }
+                //THERE IS A TOWN HERE
+                if((row + yAxis) >= 0 && (row + yAxis) < NUM_OF_ROWS && (col +  xAxis) >= 0 && (col +  xAxis) < NUM_OF_COLS &&
+                        tileGameBoard[row + yAxis][col +  xAxis] != null && tileGameBoard[row + yAxis][col +  xAxis].getButton() != null){
+                    //TOWN IS PLACED
+                    if(tileGameBoard[row + yAxis][col +  xAxis].getGameObject() != null){
+                        //TOWN IS OF THE PLAYER
+                        if(stringToColor(tileGameBoard[row + yAxis][col +  xAxis].getGameObject().getStringColor()) == playerColor){
+                            return true;
                         }
                     }
-
-
-                }
-                catch (Exception ignored){
+                    //TOWN NOT PLACED
+                    else{
+                        //TRY TO SEE IF THERE IS A ROAD THAT CONNECTS
+                        int yAxis2= -1;
+                        int xAxis2= -1;
+                        while (yAxis2 < 2){
+                            while (xAxis2 < 2){
+                                //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
+                                if((row + yAxis + yAxis2) >= 0 && (row + yAxis + yAxis2) < NUM_OF_ROWS && (col +  xAxis +  xAxis2) >= 0 && (col +  xAxis +  xAxis2) < NUM_OF_COLS &&
+                                        tileGameBoard[row + yAxis + yAxis2][col +  xAxis +  xAxis2] != null &&
+                                        tileGameBoard[row + yAxis + yAxis2][col +  xAxis +  xAxis2].getGameObject() != null &&
+                                        tileGameBoard[row + yAxis + yAxis2][col +  xAxis +  xAxis2].getGameObject().getClass().equals(Road.class) &&
+                                        stringToColor(tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2].getGameObject().getStringColor()) == playerColor){
+                                    return true;
+                                }
+                                xAxis2++;
+                            }
+                            yAxis2++;
+                            xAxis2 = -1;
+                        }
+                    }
                 }
                 xAxis++;
             }
@@ -1155,19 +1131,18 @@ public class GameController {
         }
         return false;
     }
-
     private boolean isTownConnectedByRoad(int row, int col, Color playerColor) {
         int yAxis= -1;
         int xAxis= -1;
         while (yAxis < 2){
             while (xAxis < 2){
-                try{
-                    //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
-                    if(tileGameBoard[row + yAxis][col +  xAxis].getGameObject().getClass().equals(Road.class)  && stringToColor(tileGameBoard[row + yAxis][col + xAxis].getGameObject().getStringColor()) == playerColor){
-                        return true;
-                    }
-                }
-                catch (Exception ignored){
+                //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
+                if((row + yAxis) >= 0 && (row + yAxis) < NUM_OF_ROWS && (col +  xAxis) >= 0 && (col +  xAxis) < NUM_OF_COLS &&
+                        tileGameBoard[row + yAxis][col +  xAxis]!= null &&
+                        tileGameBoard[row + yAxis][col +  xAxis].getGameObject() != null &&
+                        tileGameBoard[row + yAxis][col +  xAxis].getGameObject().getClass().equals(Road.class)  &&
+                        stringToColor(tileGameBoard[row + yAxis][col + xAxis].getGameObject().getStringColor()) == playerColor){
+                    return true;
                 }
                 xAxis++;
             }
@@ -1321,87 +1296,8 @@ public class GameController {
         refreshResources();
         refreshPoints();
     }
-
     public void generateDoc() {
-        //C:\Users\ignac\Desktop
-        String location = "C:\\Users\\ignac\\Desktop";
-
-        try (Stream<Path> stream = Files.walk(Paths.get(location))) {
-            List<String> filePathsList = stream.filter(Files::isRegularFile)
-                    .map(Path::toString)
-                    .filter(string -> string.endsWith(".class"))
-                    //.forEach(f -> System.out.println(f.toString()));
-                    .filter(string -> !string.endsWith("module-info.class"))
-                    .toList();
-
-            for(String path : filePathsList) {
-                String[] pathTokens = path.split("classes");
-                //System.out.println("First token: " + pathTokens[0]);
-                String secondToken = pathTokens[1].substring(1, pathTokens[1].lastIndexOf('.'));
-                String fullyQualifiedName = secondToken.replace('\\', '.');
-
-                System.out.println("FQN: " + fullyQualifiedName);
-
-                Class<?> clazz = Class.forName(fullyQualifiedName);
-
-                Field[] classFields = clazz.getDeclaredFields();
-
-                for(Field field : classFields) {
-                    System.out.println("Field: " + field);
-                    int modifiers = field.getModifiers();
-
-                    if(Modifier.isPublic(modifiers)) {
-                        System.out.println(" public ");
-                    }
-                    else if(Modifier.isPrivate(modifiers)) {
-                        System.out.println(" private ");
-                    }
-                    else if(Modifier.isProtected(modifiers)) {
-                        System.out.println(" protected ");
-                    }
-
-                    if(Modifier.isFinal(modifiers)) {
-                        System.out.println(" final ");
-                    }
-
-                    System.out.println(field.getType().getTypeName() + " ");
-
-                    System.out.println(field.getName() + " ");
-                }
-
-                //System.out.println("Second token: " + pathTokens[1].substring(1));
-
-            }
-
-            String basicHtml = """
-                        <!DOCTYPE html>   
-                        <html>
-                        <head>
-                        <title>HTML documentation</title>
-                        </head>
-                        <body>
-    
-                        <h1>This is a Heading</h1>
-                        <p>This is a paragraph.</p>
-    
-                        </body>
-                        </html>
-                        """;
-
-            String path = "files/docs.html";
-
-            Files.write(Paths.get(path), basicHtml.getBytes());
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Documentation generated successfully!");
-            alert.setHeaderText(null);
-            alert.setContentText("You have successfully generated the Documentation!");
-
-            alert.showAndWait();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        ReflectionUtils.generateDocReflection();
     }
 }
 
