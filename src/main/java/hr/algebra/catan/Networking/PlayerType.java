@@ -1,4 +1,4 @@
-package hr.algebra.catan.Model;
+package hr.algebra.catan.Networking;
 
 public enum PlayerType {
     CLIENT,

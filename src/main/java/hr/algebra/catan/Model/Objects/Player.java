@@ -1,22 +1,28 @@
 package hr.algebra.catan.Model.Objects;
 
+import javafx.scene.text.Text;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
-
-    private final String stringPlayerColor; // Color is not serializable
-
-    private int numPoints;
+    private String stringPlayerColor; // Color is not serializable
+    private ArrayList<Town> townList;
     private int numTowns;
     private int numCities;
     private int numRoads;
+    private int numPoints;
     private int numBrick;
     private int numSheep;
     private int numStone;
     private int numWheat;
     private int numWood;
-    private ArrayList<Town> townList;
+    private transient Text numPointsText;
+    private transient Text numBrickText;
+    private transient Text numSheepText;
+    private transient Text numStoneText;
+    private transient Text numWheatText;
+    private transient Text numWoodText;
 
     public Player(String playerColor, int numPoints, int numTowns, int numCities, int numRoads, int numBrick, int numSheep, int numStone, int numWheat, int numWood){
         this.townList = new ArrayList<>();
@@ -68,6 +74,10 @@ public class Player implements Serializable {
         return stringPlayerColor;
     }
 
+    public void setStringPlayerColor(String string){
+        this.stringPlayerColor = string;
+    }
+
     public int getNumBrick() {
         return numBrick;
     }
@@ -111,7 +121,9 @@ public class Player implements Serializable {
     public ArrayList<Town> getTownList() {
         return townList;
     }
-
+    public void setTownList(ArrayList<Town> townList) {
+        this.townList = townList;
+    }
     public void addTownList(Town town) {
         this.townList.add(town);
     }
@@ -131,4 +143,51 @@ public class Player implements Serializable {
         this.numWood = 0;
     }
 
+    public Text getNumPointsText() {
+        return numPointsText;
+    }
+
+    public void setNumPointsText(Text numPointsText) {
+        this.numPointsText = numPointsText;
+    }
+
+    public Text getNumBrickText() {
+        return numBrickText;
+    }
+
+    public void setNumBrickText(Text numBrickText) {
+        this.numBrickText = numBrickText;
+    }
+
+    public Text getNumSheepText() {
+        return numSheepText;
+    }
+
+    public void setNumSheepText(Text numSheepText) {
+        this.numSheepText = numSheepText;
+    }
+
+    public Text getNumStoneText() {
+        return numStoneText;
+    }
+
+    public void setNumStoneText(Text numStoneText) {
+        this.numStoneText = numStoneText;
+    }
+
+    public Text getNumWheatText() {
+        return numWheatText;
+    }
+
+    public void setNumWheatText(Text numWheatText) {
+        this.numWheatText = numWheatText;
+    }
+
+    public Text getNumWoodText() {
+        return numWoodText;
+    }
+
+    public void setNumWoodText(Text numWoodText) {
+        this.numWoodText = numWoodText;
+    }
 }

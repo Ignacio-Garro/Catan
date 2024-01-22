@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.catan.Controller.GameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1525.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.catan.Controller.GameController">
    <children>
       <MenuBar>
         <menus>
@@ -31,7 +32,7 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane1" prefHeight="720.0" prefWidth="1280.0">
+      <AnchorPane fx:id="anchorPane1" prefHeight="745.0" prefWidth="1525.0">
          <children>
             <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -825,8 +826,14 @@
                   <Font size="11.0" />
                </font>
             </Text>
-            <ImageView fx:id="imgDice1" fitHeight="40.0" fitWidth="40.0" layoutX="1129.0" layoutY="564.0" pickOnBounds="true" />
-            <ImageView fx:id="imgDice2" fitHeight="40.0" fitWidth="40.0" layoutX="1188.0" layoutY="564.0" pickOnBounds="true" />
+            <ImageView fx:id="imgDice1" fitHeight="40.0" fitWidth="40.0" layoutX="1129.0" layoutY="564.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/dice/1.png" />
+               </image></ImageView>
+            <ImageView fx:id="imgDice2" fitHeight="40.0" fitWidth="40.0" layoutX="1188.0" layoutY="564.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Images/dice/1.png" />
+               </image></ImageView>
             <Text fx:id="textResource3x14" layoutX="745.0" layoutY="175.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="7" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="27.0" />
@@ -872,7 +879,7 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Text>
-            <Text fx:id="textResource11x10" layoutX="626.0" layoutY="371.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="7" textAlignment="CENTER">
+            <Text fx:id="textResource11x10" layoutX="626.0" layoutY="371.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="27.0" />
                </font>
@@ -977,7 +984,7 @@
                   <Font size="11.0" />
                </font>
             </Text>
-            <Circle fx:id="circlePlayerTurn" fill="BLUE" layoutX="1248.0" layoutY="543.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circlePlayerTurn" fill="#4000ff" layoutX="1248.0" layoutY="543.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
             <ImageView fitHeight="167.0" fitWidth="87.0" layoutX="1177.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Images/rest/clerk.png" />
@@ -1004,6 +1011,9 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
+            <TextArea fx:id="chatTextArea" layoutX="1301.0" layoutY="22.0" prefHeight="534.0" prefWidth="200.0" />
+            <TextField fx:id="chatMessageTextField" layoutX="1301.0" layoutY="581.0" prefHeight="73.0" prefWidth="200.0" />
+            <Button layoutX="1301.0" layoutY="672.0" mnemonicParsing="false" onAction="#sendChatMessage" prefHeight="25.0" prefWidth="200.0" text="Button" />
          </children>
       </AnchorPane>
    </children>

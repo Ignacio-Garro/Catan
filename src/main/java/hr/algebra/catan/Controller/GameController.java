@@ -1,19 +1,19 @@
 package hr.algebra.catan.Controller;
 
-import hr.algebra.catan.Model.GameBoard;
+import hr.algebra.catan.MainApplication;
+import hr.algebra.catan.Model.*;
 import hr.algebra.catan.Model.Objects.Player;
-import hr.algebra.catan.Model.Objects.ResourceTile;
 import hr.algebra.catan.Model.Objects.Road;
 import hr.algebra.catan.Model.Objects.Town;
-import hr.algebra.catan.Model.ResourcesType;
-import hr.algebra.catan.Model.Tile;
+import hr.algebra.catan.Networking.GameBoardUtils;
+import hr.algebra.catan.Networking.NetworkingUtils;
+import hr.algebra.catan.Networking.PlayerType;
 import hr.algebra.catan.Utils.ReflectionUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -24,7 +24,6 @@ import java.io.*;
 import java.util.Random;
 
 public class GameController {
-
     @FXML
     private Button btnHouse0x6;
     @FXML
@@ -133,7 +132,6 @@ public class GameController {
     private Button btnHouse22x10;
     @FXML
     private Button btnHouse22x14;
-
 
     @FXML
     private Button btnRoad1x5;
@@ -281,14 +279,6 @@ public class GameController {
     private Button btnRoad21x15;
 
     @FXML
-    private ImageView imgDice1;
-    @FXML
-    private ImageView imgDice2;
-
-    @FXML
-    private Circle circlePlayerTurn;
-
-    @FXML
     private ImageView img3x6;
     @FXML
     private ImageView img3x10;
@@ -326,6 +316,12 @@ public class GameController {
     private ImageView img19x10;
     @FXML
     private ImageView img19x14;
+    @FXML
+    public ImageView imgDice1;
+    @FXML
+    public ImageView imgDice2;
+    @FXML
+    private Circle circlePlayerTurn;
 
     @FXML
     private Text textResource3x6;
@@ -367,50 +363,56 @@ public class GameController {
     private Text textResource19x14;
 
     @FXML
-    private Text textResourceWood0;
+    public Text textResourceWood0;
     @FXML
-    private Text textResourceBrick0;
+    public Text textResourceBrick0;
     @FXML
-    private Text textResourceWheat0;
+    public Text textResourceWheat0;
     @FXML
-    private Text textResourceSheep0;
+    public Text textResourceSheep0;
     @FXML
-    private Text textResourceStone0;
+    public Text textResourceStone0;
+    @FXML
+    public Text textResourceWood1;
+    @FXML
+    public Text textResourceBrick1;
+    @FXML
+    public Text textResourceWheat1;
+    @FXML
+    public Text textResourceSheep1;
+    @FXML
+    public Text textResourceStone1;
 
-    @FXML
-    private Text textResourceWood1;
-    @FXML
-    private Text textResourceBrick1;
-    @FXML
-    private Text textResourceWheat1;
-    @FXML
-    private Text textResourceSheep1;
-    @FXML
-    private Text textResourceStone1;
     @FXML
     private TextArea textAreaError;
     @FXML
-    private Text textPlayerPoints0;
+    public Text textPlayerPoints0;
     @FXML
-    private Text textPlayerPoints1;
+    public Text textPlayerPoints1;
+    @FXML
+    private Button btnNextTurn;
 
-    public GameBoard gameBoard;
-    public static Tile[][] tileGameBoard;
-    private static final Integer NUM_OF_ROWS = 23;
-    private static final Integer NUM_OF_COLS = 21;
-    private static final Integer POINTS_TO_WIN = 10;
-    public int diceTotal;
+    @FXML
+    private TextArea chatTextArea;
+    @FXML
+    private TextField chatMessageTextField;
+
+    public static final Integer POINTS_TO_WIN = 10;
+    public static int diceTotal;
     private static boolean gameFinished = false;
-    private ResourcesType resource;
-    private final Color blueColor = Color.rgb(0, 0, 255, 1);
-    private final Color redColor = Color.rgb(255, 0, 0, 1);
+    private boolean winnerExists;
+
+    public static final Color blueColor = Color.rgb(0, 0, 255, 1);
+    public static final Color redColor = Color.rgb(255, 0, 0, 1);
     private final Color blackColor = Color.rgb(0, 0, 0, 1);
-    private final String blueString = "blue";
-    private final String redString = "red";
+    private static final String blueString = "blue";
+    private static final String redString = "red";
     private final String cityEmoji = "🏢";
     private final String townEmoji = "\uD83C\uDFE0";
     private final String roadEmoji = "\uD83D\uDEE3";
-
+    public static GameBoard gameBoard;
+    public static Tile[][] tileGameBoard;
+    private ResourcesType resource;
 
     public void initialize() {
         Player bluePlayer = new Player(blueString, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -418,185 +420,15 @@ public class GameController {
 
         textAreaError.setText("you must set up the board by placing 2 towns and roads per player");
 
-        tileGameBoard = new Tile[NUM_OF_ROWS][NUM_OF_COLS];
-        gameBoard = new GameBoard(bluePlayer, bluePlayer, redPlayer, 0, tileGameBoard, false, false);
+        tileGameBoard = new Tile[GameBoardUtils.NUM_OF_ROWS][GameBoardUtils.NUM_OF_COLS];
+        gameBoard = new GameBoard(bluePlayer, bluePlayer, redPlayer, 0, tileGameBoard, false, false, false, -1,-1);
 
         placeTiles();
-        BoardResourcesIni();
+        boardResourcesIni();
     }
 
     public void placeTiles() {
-        //TOWNS
-        tileGameBoard[0][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 0, 6);
-        tileGameBoard[0][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 0, 10);
-        tileGameBoard[0][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 0, 14);
-        tileGameBoard[2][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 2, 4);
-        tileGameBoard[2][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 2, 8);
-        tileGameBoard[2][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 2, 12);
-        tileGameBoard[2][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 2, 16);
-        tileGameBoard[4][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 4, 4);
-        tileGameBoard[4][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 4, 8);
-        tileGameBoard[4][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 4, 12);
-        tileGameBoard[4][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 4, 16);
-        tileGameBoard[6][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 2);
-        tileGameBoard[6][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 6);
-        tileGameBoard[6][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 10);
-        tileGameBoard[6][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 14);
-        tileGameBoard[6][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 18);
-        tileGameBoard[8][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 2);
-        tileGameBoard[8][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 6);
-        tileGameBoard[8][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 10);
-        tileGameBoard[8][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 14);
-        tileGameBoard[8][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 18);
-        tileGameBoard[10][0] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 0);
-        tileGameBoard[10][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 4);
-        tileGameBoard[10][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 8);
-        tileGameBoard[10][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 12);
-        tileGameBoard[10][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 16);
-        tileGameBoard[10][20] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 20);
-        tileGameBoard[12][0] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 0);
-        tileGameBoard[12][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 4);
-        tileGameBoard[12][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 8);
-        tileGameBoard[12][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 12);
-        tileGameBoard[12][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 16);
-        tileGameBoard[12][20] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 20);
-        tileGameBoard[14][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 2);
-        tileGameBoard[14][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 6);
-        tileGameBoard[14][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 10);
-        tileGameBoard[14][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 14);
-        tileGameBoard[14][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 18);
-        tileGameBoard[16][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 2);
-        tileGameBoard[16][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 6);
-        tileGameBoard[16][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 10);
-        tileGameBoard[16][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 14);
-        tileGameBoard[16][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 18);
-        tileGameBoard[18][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 18, 4);
-        tileGameBoard[18][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 18, 8);
-        tileGameBoard[18][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 18, 12);
-        tileGameBoard[18][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 18, 16);
-        tileGameBoard[20][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 20, 4);
-        tileGameBoard[20][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 20, 8);
-        tileGameBoard[20][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 20, 12);
-        tileGameBoard[20][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 20, 16);
-        tileGameBoard[22][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 22, 6);
-        tileGameBoard[22][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 22, 10);
-        tileGameBoard[22][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 22, 10);
-        //ROADS
-        tileGameBoard[1][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 5);
-        tileGameBoard[1][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 7);
-        tileGameBoard[1][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 9);
-        tileGameBoard[1][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 11);
-        tileGameBoard[1][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 13);
-        tileGameBoard[1][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 15);
-        tileGameBoard[3][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 4);
-        tileGameBoard[3][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 8);
-        tileGameBoard[3][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 12);
-        tileGameBoard[3][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 16);
-        tileGameBoard[5][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 3);
-        tileGameBoard[5][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 5);
-        tileGameBoard[5][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 7);
-        tileGameBoard[5][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 9);
-        tileGameBoard[5][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 11);
-        tileGameBoard[5][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 13);
-        tileGameBoard[5][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 15);
-        tileGameBoard[5][17] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 17);
-        tileGameBoard[7][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 2);
-        tileGameBoard[7][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 6);
-        tileGameBoard[7][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 10);
-        tileGameBoard[7][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 14);
-        tileGameBoard[7][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 18);
-        tileGameBoard[9][1] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 1);
-        tileGameBoard[9][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 3);
-        tileGameBoard[9][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 5);
-        tileGameBoard[9][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 7);
-        tileGameBoard[9][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 9);
-        tileGameBoard[9][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 11);
-        tileGameBoard[9][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 13);
-        tileGameBoard[9][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 15);
-        tileGameBoard[9][17] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 17);
-        tileGameBoard[9][19] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 19);
-        tileGameBoard[11][0] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 0);
-        tileGameBoard[11][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 4);
-        tileGameBoard[11][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 8);
-        tileGameBoard[11][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 12);
-        tileGameBoard[11][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 16);
-        tileGameBoard[11][20] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 20);
-        tileGameBoard[13][1] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 1);
-        tileGameBoard[13][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 3);
-        tileGameBoard[13][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 5);
-        tileGameBoard[13][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 7);
-        tileGameBoard[13][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 9);
-        tileGameBoard[13][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 11);
-        tileGameBoard[13][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 13);
-        tileGameBoard[13][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 15);
-        tileGameBoard[13][17] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 17);
-        tileGameBoard[13][19] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 19);
-        tileGameBoard[15][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 2);
-        tileGameBoard[15][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 6);
-        tileGameBoard[15][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 10);
-        tileGameBoard[15][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 14);
-        tileGameBoard[15][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 18);
-        tileGameBoard[17][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 3);
-        tileGameBoard[17][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 5);
-        tileGameBoard[17][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 5);
-        tileGameBoard[17][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 9);
-        tileGameBoard[17][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 11);
-        tileGameBoard[17][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 13);
-        tileGameBoard[17][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 15);
-        tileGameBoard[17][17] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 17);
-        tileGameBoard[19][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 4);
-        tileGameBoard[19][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 8);
-        tileGameBoard[19][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 12);
-        tileGameBoard[19][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 16);
-        tileGameBoard[21][5] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 5);
-        tileGameBoard[21][7] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 7);
-        tileGameBoard[21][9] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 9);
-        tileGameBoard[21][11] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 11);
-        tileGameBoard[21][13] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 13);
-        tileGameBoard[21][15] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 21, 15);
-        //RESOURCES
-        tileGameBoard[3][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 6);
-        tileGameBoard[3][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 10);
-        tileGameBoard[3][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 14);
-        tileGameBoard[7][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 4);
-        tileGameBoard[7][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 8);
-        tileGameBoard[7][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 12);
-        tileGameBoard[7][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 16);
-        tileGameBoard[11][2] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 2);
-        tileGameBoard[11][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 6);
-        tileGameBoard[11][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 10);
-        tileGameBoard[11][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 14);
-        tileGameBoard[11][18] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 18);
-        tileGameBoard[15][4] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 4);
-        tileGameBoard[15][8] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 8);
-        tileGameBoard[15][12] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 12);
-        tileGameBoard[15][16] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 16);
-        tileGameBoard[19][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 6);
-        tileGameBoard[19][10] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 10);
-        tileGameBoard[19][14] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 19, 14);
-        //IDK
-        /*
-        tileGameBoard[3][6] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 6);
-        tileGameBoard[1][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 1, 3);
-        tileGameBoard[2][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 2, 3);
-        tileGameBoard[3][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 3, 3);
-        tileGameBoard[4][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 4, 3);
-        tileGameBoard[5][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 5, 3);
-        tileGameBoard[6][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 6, 3);
-        tileGameBoard[7][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 7, 3);
-        tileGameBoard[8][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 8, 3);
-        tileGameBoard[9][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 9, 3);
-        tileGameBoard[10][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 10, 3);
-        tileGameBoard[11][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 11, 3);
-        tileGameBoard[12][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 12, 3);
-        tileGameBoard[13][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 13, 3);
-        tileGameBoard[14][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 14, 3);
-        tileGameBoard[15][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 15, 3);
-        tileGameBoard[16][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 16, 3);
-        tileGameBoard[17][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 17, 3);
-        tileGameBoard[18][3] = new Tile(null, null, null, null, null, gameBoard.getPlayerTurn(), 18, 3);
-        */
-        //-----------------------------------------------------------
+        GameBoardUtils.placeTiles(gameBoard, gameBoard.getGameBoardTiles());
 
         tileGameBoard[0][6].setButton(btnHouse0x6);
         tileGameBoard[0][10].setButton(btnHouse0x10);
@@ -746,141 +578,100 @@ public class GameController {
         tileGameBoard[19][10].setImageView(img19x10);
         tileGameBoard[19][14].setImageView(img19x14);
 
-        tileGameBoard[3][6].setResourceNumber(textResource3x6);
-        tileGameBoard[3][10].setResourceNumber(textResource3x10);
-        tileGameBoard[3][14].setResourceNumber(textResource3x14);
-        tileGameBoard[7][4].setResourceNumber(textResource7x4);
-        tileGameBoard[7][8].setResourceNumber(textResource7x8);
-        tileGameBoard[7][12].setResourceNumber(textResource7x12);
-        tileGameBoard[7][16].setResourceNumber(textResource7x16);
-        tileGameBoard[11][2].setResourceNumber(textResource11x2);
-        tileGameBoard[11][6].setResourceNumber(textResource11x6);
-        tileGameBoard[11][10].setResourceNumber(textResource11x10);
-        tileGameBoard[11][14].setResourceNumber(textResource11x14);
-        tileGameBoard[11][18].setResourceNumber(textResource11x18);
-        tileGameBoard[15][4].setResourceNumber(textResource15x4);
-        tileGameBoard[15][8].setResourceNumber(textResource15x8);
-        tileGameBoard[15][12].setResourceNumber(textResource15x12);
-        tileGameBoard[15][16].setResourceNumber(textResource15x16);
-        tileGameBoard[19][6].setResourceNumber(textResource19x6);
-        tileGameBoard[19][10].setResourceNumber(textResource19x10);
-        tileGameBoard[19][14].setResourceNumber(textResource19x14);
+        tileGameBoard[3][6].setTextResource(textResource3x6);
+        tileGameBoard[3][10].setTextResource(textResource3x10);
+        tileGameBoard[3][14].setTextResource(textResource3x14);
+        tileGameBoard[7][4].setTextResource(textResource7x4);
+        tileGameBoard[7][8].setTextResource(textResource7x8);
+        tileGameBoard[7][12].setTextResource(textResource7x12);
+        tileGameBoard[7][16].setTextResource(textResource7x16);
+        tileGameBoard[11][2].setTextResource(textResource11x2);
+        tileGameBoard[11][6].setTextResource(textResource11x6);
+        tileGameBoard[11][10].setTextResource(textResource11x10);
+        tileGameBoard[11][14].setTextResource(textResource11x14);
+        tileGameBoard[11][18].setTextResource(textResource11x18);
+        tileGameBoard[15][4].setTextResource(textResource15x4);
+        tileGameBoard[15][8].setTextResource(textResource15x8);
+        tileGameBoard[15][12].setTextResource(textResource15x12);
+        tileGameBoard[15][16].setTextResource(textResource15x16);
+        tileGameBoard[19][6].setTextResource(textResource19x6);
+        tileGameBoard[19][10].setTextResource(textResource19x10);
+        tileGameBoard[19][14].setTextResource(textResource19x14);
 
-        //SET RESOURCETILE IN TILES
-        tileGameBoard[3][6].setResourceTile(new ResourceTile(3, 6, null, null, null, -1));
-        tileGameBoard[3][10].setResourceTile(new ResourceTile(3, 10, null, null, null, -1));
-        tileGameBoard[3][14].setResourceTile(new ResourceTile(3, 14, null, null, null, -1));
-        tileGameBoard[7][4].setResourceTile(new ResourceTile(7, 4, null, null, null, -1));
-        tileGameBoard[7][8].setResourceTile(new ResourceTile(7, 8, null, null, null, -1));
-        tileGameBoard[7][12].setResourceTile(new ResourceTile(7, 12, null, null, null, -1));
-        tileGameBoard[7][16].setResourceTile(new ResourceTile(7, 16, null, null, null, -1));
-        tileGameBoard[11][2].setResourceTile(new ResourceTile(11, 2, null, null, null, -1));
-        tileGameBoard[11][6].setResourceTile(new ResourceTile(11, 6, null, null, null, -1));
-        tileGameBoard[11][10].setResourceTile(new ResourceTile(11, 10, null, null, null, -1));
-        tileGameBoard[11][14].setResourceTile(new ResourceTile(11, 14, null, null, null, -1));
-        tileGameBoard[11][18].setResourceTile(new ResourceTile(11, 18, null, null, null, -1));
-        tileGameBoard[15][4].setResourceTile(new ResourceTile(15, 4, null, null, null, -1));
-        tileGameBoard[15][8].setResourceTile(new ResourceTile(15, 8, null, null, null, -1));
-        tileGameBoard[15][12].setResourceTile(new ResourceTile(15, 12, null, null, null, -1));
-        tileGameBoard[15][16].setResourceTile(new ResourceTile(15, 16, null, null, null, -1));
-        tileGameBoard[19][6].setResourceTile(new ResourceTile(19, 6, null, null, null, -1));
-        tileGameBoard[19][10].setResourceTile(new ResourceTile(19, 10, null, null, null, -1));
-        tileGameBoard[19][14].setResourceTile(new ResourceTile(19, 14, null, null, null, -1));
+        gameBoard.getBluePlayer().setNumWoodText(textResourceWood0);
+        gameBoard.getBluePlayer().setNumBrickText(textResourceBrick0);
+        gameBoard.getBluePlayer().setNumWheatText(textResourceWheat0);
+        gameBoard.getBluePlayer().setNumSheepText(textResourceSheep0);
+        gameBoard.getBluePlayer().setNumStoneText(textResourceStone0);
+
+        gameBoard.getRedPlayer().setNumWoodText(textResourceWood1);
+        gameBoard.getRedPlayer().setNumBrickText(textResourceBrick1);
+        gameBoard.getRedPlayer().setNumWheatText(textResourceWheat1);
+        gameBoard.getRedPlayer().setNumSheepText(textResourceSheep1);
+        gameBoard.getRedPlayer().setNumStoneText(textResourceStone1);
+
+        gameBoard.setCirclePlayerTurn(circlePlayerTurn);
+
+        gameBoard.setTextAreaError(textAreaError);
+
+        gameBoard.setBtnNextTurn(btnNextTurn);
+
+        gameBoard.setImgDice1(imgDice1);
+        gameBoard.setImgDice2(imgDice2);
     }
 
-    public void BoardResourcesIni() {
-        Image image;
+    public void boardResourcesIni() {
         refreshResources();
 
-        for (int r = 3; r < NUM_OF_ROWS; r = r + 4) {
-            for (int c = 2; c < NUM_OF_COLS - 1; c = c + 2) {
+        Image image;
+        ResourcesType[] resources;
+        int randomIndex;
+        Random random = new Random();
+
+        for (int r = 3; r < GameBoardUtils.NUM_OF_ROWS; r = r + 4) {
+            for (int c = 2; c < GameBoardUtils.NUM_OF_COLS - 1; c = c + 2) {
                 if (tileGameBoard[r][c] != null && tileGameBoard[r][c].getResourceTile() != null && (r != 11 || c != 10)) {
                     //get resource
-                    resource = getRandomResource();
+
+                    resources = ResourcesType.values();
+                    randomIndex = random.nextInt(resources.length - 1);
+                    resource =resources[randomIndex];
+
                     while (resource.getNumTilesInBoard() == 0) {
-                        resource = getRandomResource();
+                        resources = ResourcesType.values();
+                        random = new Random();
+                        randomIndex = random.nextInt(resources.length - 1);
+                        resource =resources[randomIndex];
                     }
                     resource.setNumTilesInBoard(resource.getNumTilesInBoard() - 1);
 
-                    image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource + ".png"); // You can also use a URL or an input stream
+                    tileGameBoard[r][c].setImageViewInt(randomIndex);
+
+                    image = new Image("file:C:\\Users\\ignac\\Documents\\IntelliJProjects\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource + ".png"); // You can also use a URL or an input stream
                     tileGameBoard[r][c].getImageView().setImage(image);
                     tileGameBoard[r][c].getResourceTile().setResource(resource);
                     // Generate a random number between 2 and 12 (inclusive)
-                    Random random = new Random();
+                    random = new Random();
                     int lowerBound = 2;
                     int upperBound = 12;
                     int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
                     tileGameBoard[r][c].getResourceTile().setNumberResource(randomNumber);
-                    tileGameBoard[r][c].getResourceNumber().setText((String.valueOf(randomNumber)));
+                    tileGameBoard[r][c].setResourceNumber(randomNumber);
+                    tileGameBoard[r][c].getTextResource().setText(String.valueOf(randomNumber));
                 }
             }
         }
         //place dessert
         resource = ResourcesType.DESSERT;
-        image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource + ".png");
+        image = new Image("file:C:\\Users\\ignac\\Documents\\IntelliJProjects\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\tiles\\" + resource + ".png");
         tileGameBoard[11][10].getImageView().setImage(image);
         tileGameBoard[11][10].getResourceTile().setNumberResource(-1);
-        tileGameBoard[11][10].getResourceNumber().setText(null);
+        tileGameBoard[11][10].setResourceNumber(-1);
 
     }
 
-    private static ResourcesType getRandomResource() {
-        ResourcesType[] resource = ResourcesType.values();
-        Random random = new Random();
-        int randomIndex = random.nextInt(resource.length - 1);
-        return resource[randomIndex];
-    }
-
-    public void nextTurn() {
-
-        if (!gameFinished) {
-            textAreaError.setText("");
-
-            if (gameBoard.getPlayerTurn() == gameBoard.getBluePlayer()) {
-                gameBoard.setPlayerTurn(gameBoard.getRedPlayer());
-                circlePlayerTurn.setFill(redColor);
-            } else {
-                gameBoard.setPlayerTurn(gameBoard.getBluePlayer());
-                circlePlayerTurn.setFill(blueColor);
-            }
-
-            //check end of setup
-            if (!gameBoard.isSetUpDone() && gameBoard.getBluePlayer().getNumTowns() == 2 && gameBoard.getRedPlayer().getNumTowns() == 2 && gameBoard.getBluePlayer().getNumRoads() == 2 && gameBoard.getRedPlayer().getNumRoads() == 2) {
-                textAreaError.setText("The board has been setup properly");
-                gameBoard.setSetUpDone(true);
-            } else if (!gameBoard.isSetUpDone())
-                textAreaError.setText("you must set up the board by placing 2 towns and roads per player");
-
-            if (gameBoard.isSetUpDone()) {
-                //get dice roles
-                Random random = new Random();
-                int dice1 = random.nextInt(6) + 1;
-                random = new Random();
-                int dice2 = random.nextInt(6) + 1;
-                diceTotal = dice1 + dice2;
-
-                //display dice roll
-                Image image;
-                image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\dice\\" + dice1 + ".png");
-                imgDice1.setImage(image);
-                image = new Image("file:C:\\Users\\ignac\\Documents\\GitHub\\Catan\\src\\main\\resources\\hr\\algebra\\catan\\Images\\dice\\" + dice2 + ".png");
-                imgDice2.setImage(image);
-            }
-
-
-            //get resources from dice role
-            for (Town town : gameBoard.getBluePlayer().getTownList()) {
-                town.getResources(gameBoard.getBluePlayer(), diceTotal, town.getNumberOfResourcesFromUpgrade());
-            }
-            for (Town town : gameBoard.getRedPlayer().getTownList()) {
-                town.getResources(gameBoard.getRedPlayer(), diceTotal, town.getNumberOfResourcesFromUpgrade());
-            }
-
-            gameBoard.setNumberOfMoves(gameBoard.getNumberOfMoves() + 1);
-
-            refreshResources();
-            refreshPoints();
-        }
+    public void sendChatMessage(){
+        ChatUtils.sendChatMessage(chatMessageTextField, remoteChatService, chatMessagesTextArea);
     }
 
     public void townButtonPressed(ActionEvent event) {
@@ -890,8 +681,8 @@ public class GameController {
         // GET THE POSITION OF THE clickedButton IN THE ARRAY buttonGameBoard
         int row = -1;
         int col = -1;
-        for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < NUM_OF_COLS; j++) {
+        for (int i = 0; i < GameBoardUtils.NUM_OF_ROWS; i++) {
+            for (int j = 0; j < GameBoardUtils.NUM_OF_COLS; j++) {
                 if (tileGameBoard[i][j] != null && tileGameBoard[i][j].getButton() != null && tileGameBoard[i][j].getButton() == clickedButton) {
                     row = i;
                     col = j;
@@ -906,16 +697,16 @@ public class GameController {
         if (tileGameBoard[row][col].getGameObject() == null) {
             //SETUP TOWN
             if (!gameBoard.isSetUpDone() && gameBoard.getPlayerTurn().getNumTowns() < 2) {
-                if (TownProximityRule(row, col)) {
+                if (GameObjectUtils.TownProximityRule(row, col, gameBoard.getGameBoardTiles())) {
                     placeTown(row, col, clickedButton);
                 }
             }
             //NOT FIRST TOWN, MUST BE CONNECTED TO ROAD, FOLLOW ROAD RULES, AND HAVE ENOUGH RESOURCES
             else if (gameBoard.isSetUpDone()) {
                 //IT IS CONNECTED TO A ROAD
-                if (isTownConnectedByRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()))) {
+                if (GameObjectUtils.isTownConnectedByRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()),gameBoard.getGameBoardTiles())) {
                     //MAKE SURE IT IS NOT NEXT TO ANOTHER TOWN
-                    if (TownProximityRule(row, col)) {
+                    if (GameObjectUtils.TownProximityRule(row, col,gameBoard.getGameBoardTiles())) {
                         //COST
                         if ((gameBoard.getPlayerTurn().getNumWood() >= 1 && gameBoard.getPlayerTurn().getNumBrick() >= 1 && gameBoard.getPlayerTurn().getNumWheat() >= 1 && gameBoard.getPlayerTurn().getNumSheep() >= 1)) {
                             gameBoard.getPlayerTurn().setNumWood(gameBoard.getPlayerTurn().getNumWood() - 1);
@@ -954,6 +745,7 @@ public class GameController {
                 }
             }
         }
+        //sendGameboardAndUpdate();
     }
 
     public void roadButtonPressed(ActionEvent event) {
@@ -962,8 +754,8 @@ public class GameController {
         // GET THE POSITION OF THE clickedButton IN THE ARRAY buttonGameBoard
         int row = -1;
         int col = -1;
-        for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < NUM_OF_COLS; j++) {
+        for (int i = 0; i < GameBoardUtils.NUM_OF_ROWS; i++) {
+            for (int j = 0; j < GameBoardUtils.NUM_OF_COLS; j++) {
                 if (tileGameBoard[i][j] != null && tileGameBoard[i][j].getButton() != null && tileGameBoard[i][j].getButton() == clickedButton) {
                     row = i;
                     col = j;
@@ -978,8 +770,8 @@ public class GameController {
         if (tileGameBoard[row][col].getGameObject() == null) {
             //SETUP ROADS
             if (!gameBoard.isSetUpDone() && gameBoard.getPlayerTurn().getNumRoads() < 2) {
-                if (TownProximityRule(row, col)) {
-                    if (isRoadConnectedByTownOrRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()))) {
+                if (GameObjectUtils.TownProximityRule(row, col,gameBoard.getGameBoardTiles())) {
+                    if (GameObjectUtils.isRoadConnectedByTownOrRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()), gameBoard.getGameBoardTiles())) {
                         placeRoad(row, col, clickedButton);
                     } else {
                         textAreaError.setText("road not connected to town or another road");
@@ -989,7 +781,7 @@ public class GameController {
             //NOT FIRST TOWN, MUST BE CONNECTED TO ROAD, FOLLOW ROAD RULES, AND HAVE ENOUGH RESOURCES
             else if (gameBoard.isSetUpDone()) {
                 //IS THERE A TOWN CONNECTED TO IT?
-                if (isRoadConnectedByTownOrRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()))) {
+                if (GameObjectUtils.isRoadConnectedByTownOrRoad(row, col, stringToColor(gameBoard.getPlayerTurn().getStringPlayerColor()), gameBoard.getGameBoardTiles())) {
                     //COSTS
                     if ((gameBoard.getPlayerTurn().getNumWood() >= 1 && gameBoard.getPlayerTurn().getNumBrick() >= 1)) {
                         gameBoard.getPlayerTurn().setNumWood(gameBoard.getPlayerTurn().getNumWood() - 1);
@@ -1006,6 +798,11 @@ public class GameController {
                 }
             }
         }
+        //sendGameboardAndUpdate();
+    }
+
+    public void cheatButtonPressed() {
+        gameBoard.setCHEATS(!gameBoard.isCHEATS());
     }
 
     private void placeTown(int row, int col, Button clickedButton) {
@@ -1020,7 +817,7 @@ public class GameController {
 
         refreshResources();
         refreshPoints();
-        checkWinner();
+        winnerExists = checkWinner();
         textAreaError.setText("town placed in row " + row + " and column " + col);
     }
 
@@ -1037,7 +834,7 @@ public class GameController {
 
         refreshResources();
         refreshPoints();
-        checkWinner();
+        winnerExists = checkWinner();
         textAreaError.setText("town placed in row " + row + " and column " + col);
     }
 
@@ -1051,92 +848,126 @@ public class GameController {
 
         refreshResources();
         refreshPoints();
-        checkWinner();
+        winnerExists = checkWinner();
         textAreaError.setText("road placed is in row " + row + " and column " + col);
     }
 
-    private boolean TownProximityRule(int row, int col) {
-        for (int r = -2; r < 4; r = r + 2) { // -2 0 2
-            for (int c = -2; c < 4; c = c + 2) {
-                if ((row + r) >= 0 && (row + r) < NUM_OF_ROWS && (col + c) >= 0 && (col + c) < NUM_OF_COLS &&
-                        tileGameBoard[row + r][col + c] != null &&
-                        tileGameBoard[row + r][col + c].getGameObject() != null &&
-                        tileGameBoard[row + r][col + c].getGameObject().getClass().equals(Town.class)) {
-                    return false;
+    public void nextTurn() {
+
+        if (!gameFinished) {
+            textAreaError.setText("");
+
+            if (gameBoard.getPlayerTurn() == gameBoard.getBluePlayer()) {
+                gameBoard.setPlayerTurn(gameBoard.getRedPlayer());
+                circlePlayerTurn.setFill(redColor);
+            } else {
+                gameBoard.setPlayerTurn(gameBoard.getBluePlayer());
+                circlePlayerTurn.setFill(blueColor);
+            }
+
+            GameBoardUtils.checkEndOfSetup(gameBoard, textAreaError);
+
+            diceTotal = GameBoardUtils.tryRollDice(gameBoard, diceTotal);
+
+            //get resources from dice role
+            if(gameBoard.isSetUpDone()){
+                for (Town town : gameBoard.getBluePlayer().getTownList()) {
+                    town.getResources(gameBoard.getBluePlayer(), diceTotal, town.getNumberOfResourcesFromUpgrade());
+                }
+                for (Town town : gameBoard.getRedPlayer().getTownList()) {
+                    town.getResources(gameBoard.getRedPlayer(), diceTotal, town.getNumberOfResourcesFromUpgrade());
                 }
             }
-        }
 
-        return true;
+            gameBoard.setNumberOfMoves(gameBoard.getNumberOfMoves() + 1);
+
+            sendGameboardAndUpdate();
+            GameBoardUtils.changeBoardState(gameBoard, false);
+        }
     }
 
-    private boolean isRoadConnectedByTownOrRoad(int row, int col, Color playerColor) {
-        int yAxis = -1;
-        int xAxis = -1;
-        while (yAxis <= 1) {
-            while (xAxis <= 1) {
-                //THERE IS A TOWN HERE
-                if ((row + yAxis) >= 0 && (row + yAxis) < NUM_OF_ROWS && (col + xAxis) >= 0 && (col + xAxis) < NUM_OF_COLS &&
-                        tileGameBoard[row + yAxis][col + xAxis] != null && tileGameBoard[row + yAxis][col + xAxis].getButton() != null) {
-                    //TOWN IS PLACED
-                    if (tileGameBoard[row + yAxis][col + xAxis].getGameObject() != null) {
-                        //TOWN IS OF THE PLAYER
-                        if (stringToColor(tileGameBoard[row + yAxis][col + xAxis].getGameObject().getStringColor()) == playerColor) {
-                            return true;
-                        }
-                    }
-                    //TOWN NOT PLACED
-                    else {
-                        //TRY TO SEE IF THERE IS A ROAD THAT CONNECTS
-                        int yAxis2 = -1;
-                        int xAxis2 = -1;
-                        while (yAxis2 < 2) {
-                            while (xAxis2 < 2) {
-                                //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
-                                if ((row + yAxis + yAxis2) >= 0 && (row + yAxis + yAxis2) < NUM_OF_ROWS && (col + xAxis + xAxis2) >= 0 && (col + xAxis + xAxis2) < NUM_OF_COLS &&
-                                        tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2] != null &&
-                                        tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2].getGameObject() != null &&
-                                        tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2].getGameObject().getClass().equals(Road.class) &&
-                                        stringToColor(tileGameBoard[row + yAxis + yAxis2][col + xAxis + xAxis2].getGameObject().getStringColor()) == playerColor) {
-                                    return true;
-                                }
-                                xAxis2++;
-                            }
-                            yAxis2++;
-                            xAxis2 = -1;
-                        }
-                    }
-                }
-                xAxis++;
-            }
-            yAxis++;
-            xAxis = -1;
+    public static void refreshVisualTiles(){
+        gameBoard.getGameBoardTiles()[3][6].getImageView().setImage(gameBoard.getGameBoardTiles()[3][6].intToImage(gameBoard.getGameBoardTiles()[3][6].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[3][10].getImageView().setImage(gameBoard.getGameBoardTiles()[3][10].intToImage(gameBoard.getGameBoardTiles()[3][10].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[3][14].getImageView().setImage(gameBoard.getGameBoardTiles()[3][14].intToImage(gameBoard.getGameBoardTiles()[3][14].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[7][4].getImageView().setImage(gameBoard.getGameBoardTiles()[7][4].intToImage(gameBoard.getGameBoardTiles()[7][4].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[7][8].getImageView().setImage(gameBoard.getGameBoardTiles()[7][8].intToImage(gameBoard.getGameBoardTiles()[7][8].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[7][12].getImageView().setImage(gameBoard.getGameBoardTiles()[7][12].intToImage(gameBoard.getGameBoardTiles()[7][12].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[7][16].getImageView().setImage(gameBoard.getGameBoardTiles()[7][16].intToImage(gameBoard.getGameBoardTiles()[7][16].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[11][2].getImageView().setImage(gameBoard.getGameBoardTiles()[11][2].intToImage(gameBoard.getGameBoardTiles()[11][2].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[11][6].getImageView().setImage(gameBoard.getGameBoardTiles()[11][6].intToImage(gameBoard.getGameBoardTiles()[11][6].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[11][14].getImageView().setImage(gameBoard.getGameBoardTiles()[11][14].intToImage(gameBoard.getGameBoardTiles()[11][14].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[11][18].getImageView().setImage(gameBoard.getGameBoardTiles()[11][18].intToImage(gameBoard.getGameBoardTiles()[11][18].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[15][4].getImageView().setImage(gameBoard.getGameBoardTiles()[15][4].intToImage(gameBoard.getGameBoardTiles()[15][4].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[15][8].getImageView().setImage(gameBoard.getGameBoardTiles()[15][8].intToImage(gameBoard.getGameBoardTiles()[15][8].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[15][12].getImageView().setImage(gameBoard.getGameBoardTiles()[15][12].intToImage(gameBoard.getGameBoardTiles()[15][12].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[15][16].getImageView().setImage(gameBoard.getGameBoardTiles()[15][16].intToImage(gameBoard.getGameBoardTiles()[15][16].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[19][6].getImageView().setImage(gameBoard.getGameBoardTiles()[19][6].intToImage(gameBoard.getGameBoardTiles()[19][6].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[19][10].getImageView().setImage(gameBoard.getGameBoardTiles()[19][10].intToImage(gameBoard.getGameBoardTiles()[19][10].getImageViewInt()));
+        gameBoard.getGameBoardTiles()[19][14].getImageView().setImage(gameBoard.getGameBoardTiles()[19][14].intToImage(gameBoard.getGameBoardTiles()[19][14].getImageViewInt()));
+
+        gameBoard.getGameBoardTiles()[3][6].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[3][6].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[3][10].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[3][10].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[3][14].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[3][14].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[7][4].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[7][4].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[7][8].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[7][8].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[7][12].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[7][12].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[7][16].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[7][16].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[11][2].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[11][2].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[11][6].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[11][6].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[11][14].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[11][14].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[11][18].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[11][18].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[15][4].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[15][4].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[15][8].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[15][8].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[15][12].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[15][12].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[15][16].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[15][16].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[19][6].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[19][6].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[19][10].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[19][10].getResourceNumber())));
+        gameBoard.getGameBoardTiles()[19][14].getTextResource().setText((String.valueOf(gameBoard.getGameBoardTiles()[19][14].getResourceNumber())));
+
+        gameBoard.getBluePlayer().getNumWoodText().setText("WOOD: " + String.valueOf(gameBoard.getBluePlayer().getNumWood()));
+        gameBoard.getBluePlayer().getNumBrickText().setText("BRICK: " + String.valueOf(gameBoard.getBluePlayer().getNumBrick()));
+        gameBoard.getBluePlayer().getNumSheepText().setText("SHEEP: " + String.valueOf(gameBoard.getBluePlayer().getNumSheep()));
+        gameBoard.getBluePlayer().getNumWheatText().setText("WHEAT: " + String.valueOf(gameBoard.getBluePlayer().getNumWheat()));
+        gameBoard.getBluePlayer().getNumStoneText().setText("STONE: " + String.valueOf(gameBoard.getBluePlayer().getNumStone()));
+
+        gameBoard.getRedPlayer().getNumWoodText().setText(String.valueOf(gameBoard.getRedPlayer().getNumWood()) + " :WOOD");
+        gameBoard.getRedPlayer().getNumBrickText().setText(String.valueOf(gameBoard.getRedPlayer().getNumBrick()) + " :BRICK");
+        gameBoard.getRedPlayer().getNumSheepText().setText(String.valueOf(gameBoard.getRedPlayer().getNumSheep()) + " :SHEEP");
+        gameBoard.getRedPlayer().getNumWheatText().setText(String.valueOf(gameBoard.getRedPlayer().getNumWheat()) + " :WHEAT");
+        gameBoard.getRedPlayer().getNumStoneText().setText(String.valueOf(gameBoard.getRedPlayer().getNumStone()) + " :STONE");
+
+        if(gameBoard.getPlayerTurn().getStringPlayerColor().equals(blueString)){
+            gameBoard.getCirclePlayerTurn().setFill(blueColor);
         }
-        return false;
+        else gameBoard.getCirclePlayerTurn().setFill(redColor);
+
+        gameBoard.getImgDice1().setImage(GameBoardUtils.intToImageDice(gameBoard.getIntDice1()));
+        gameBoard.getImgDice2().setImage(GameBoardUtils.intToImageDice(gameBoard.getIntDice2()));
     }
 
-    private boolean isTownConnectedByRoad(int row, int col, Color playerColor) {
-        int yAxis = -1;
-        int xAxis = -1;
-        while (yAxis < 2) {
-            while (xAxis < 2) {
-                //THERE IS A ROAD AND IT HAS THE SAME COLOR AS PLAYER TURN
-                if ((row + yAxis) >= 0 && (row + yAxis) < NUM_OF_ROWS && (col + xAxis) >= 0 && (col + xAxis) < NUM_OF_COLS &&
-                        tileGameBoard[row + yAxis][col + xAxis] != null &&
-                        tileGameBoard[row + yAxis][col + xAxis].getGameObject() != null &&
-                        tileGameBoard[row + yAxis][col + xAxis].getGameObject().getClass().equals(Road.class) &&
-                        stringToColor(tileGameBoard[row + yAxis][col + xAxis].getGameObject().getStringColor()) == playerColor) {
-                    return true;
-                }
-                xAxis++;
-            }
-            yAxis++;
-            xAxis = -1;
-        }
-        return false;
-    }
+    public void sendGameboardAndUpdate(){
+        GameBoard createdGameBoard = GameBoardUtils.CreateGameState(gameBoard, winnerExists);
 
-    private void refreshResources() {
+        if(MainApplication.playerLoggedIn.name().equals(PlayerType.CLIENT.name())){
+            NetworkingUtils.sendGameBoardToServer(createdGameBoard);
+        }
+        else{
+            NetworkingUtils.sendGameBoardToClient(createdGameBoard);
+        }
+        refreshResources();
+        refreshPoints();
+        refreshColorCircle();
+    }
+     public void refreshColorCircle(){
+         if (gameBoard.getPlayerTurn() == gameBoard.getBluePlayer()) {
+             circlePlayerTurn.setFill(blueColor);
+         } else {
+             circlePlayerTurn.setFill(redColor);
+         }
+     }
+
+    public void refreshResources() {
         //refresh resources text
         textResourceWood0.setText("WOOD: " + gameBoard.getBluePlayer().getNumWood());
         textResourceBrick0.setText("BRICK: " + gameBoard.getBluePlayer().getNumBrick());
@@ -1152,40 +983,45 @@ public class GameController {
 
     }
 
-    private void refreshPoints() {
+    public void refreshPoints() {
         textPlayerPoints0.setText(String.valueOf(gameBoard.getBluePlayer().getNumPoints()));
         textPlayerPoints1.setText(String.valueOf(gameBoard.getRedPlayer().getNumPoints()));
     }
 
-    private void checkWinner() {
-        if (gameBoard.getBluePlayer().getNumPoints() >= POINTS_TO_WIN) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("WINNER!!!");
-            alert.setHeaderText("BLUE PLAYER HAS WON THE GAME");
-            alert.showAndWait();
-            gameFinished = true;
-        } else if (gameBoard.getRedPlayer().getNumPoints() >= POINTS_TO_WIN) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("WINNER!!!");
-            alert.setHeaderText("RED PLAYER HAS WON THE GAME");
-            alert.showAndWait();
-            gameFinished = true;
-        }
+    private boolean checkWinner() {
+        gameFinished = DialogUtils.CheckWinner(gameBoard, POINTS_TO_WIN);
+        return gameFinished;
     }
 
-    public void cheatButtonPressed() {
-        gameBoard.setCHEATS(!gameBoard.isCHEATS());
-    }
-
-    public Color stringToColor(String colorString) {
+    public static Color stringToColor(String colorString) {
         if (colorString.equals("blue")) return blueColor;
         else if (colorString.equals("red")) return redColor;
         else return null;
     }
 
+    public static void restoreGameboard(GameBoard gameBoardThatWasSent){
+        gameBoard.setPlayerTurn(gameBoardThatWasSent.getPlayerTurn());
+        gameBoard.setNumberOfMoves(gameBoardThatWasSent.getNumberOfMoves());
+        gameBoard.setCHEATS(gameBoardThatWasSent.isCHEATS());
+        gameBoard.setSetUpDone(gameBoardThatWasSent.isSetUpDone());
+        gameBoard.setBluePlayer(gameBoardThatWasSent.getBluePlayer());
+        gameBoard.setRedPlayer(gameBoardThatWasSent.getRedPlayer());
+        gameBoard.setIntDice1((gameBoardThatWasSent.getIntDice1()));
+        gameBoard.setIntDice2((gameBoardThatWasSent.getIntDice2()));
+
+
+        GameBoardUtils.restoreGameBoard(gameBoardThatWasSent, gameBoard);
+
+        GameBoardUtils.changeBoardState(gameBoard, true);
+
+        GameBoardUtils.checkEndOfSetup(gameBoard, gameBoard.getTextAreaError());
+
+        refreshVisualTiles();
+    }
+
     public void newGame() {
-        for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < NUM_OF_COLS; j++) {
+        for (int i = 0; i < GameBoardUtils.NUM_OF_ROWS; i++) {
+            for (int j = 0; j < GameBoardUtils.NUM_OF_COLS; j++) {
                 if (gameBoard.getGameBoardTiles()[i][j] != null && gameBoard.getGameBoardTiles()[i][j].getButton() != null) {
                     gameBoard.getGameBoardTiles()[i][j].setGameObject(null);
                     gameBoard.getGameBoardTiles()[i][j].getButton().setTextFill(blackColor);
@@ -1206,90 +1042,33 @@ public class GameController {
 
         refreshResources();
         refreshPoints();
-
-
     }
 
     public void save() {
-        //MAKE GAME BOARD TO SAVE
-        Tile[][] gameBoardTiles = new Tile[NUM_OF_ROWS][NUM_OF_COLS];
-
-        for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < NUM_OF_COLS; j++) {
-                //There is something in that tile
-                if (gameBoard.getGameBoardTiles()[i][j] != null && gameBoard.getGameBoardTiles()[i][j].getGameObject() != null) {
-                    gameBoardTiles[i][j] = gameBoard.getGameBoardTiles()[i][j];
-                }
-            }
-        }
-
-        GameBoard gameBoardToSave = new GameBoard(gameBoard.getPlayerTurn(), gameBoard.getBluePlayer(), gameBoard.getRedPlayer(), gameBoard.getNumberOfMoves(), gameBoardTiles, gameBoard.isCHEATS(), gameBoard.isSetUpDone());
-        //SAVE INTO A FILE THE GAME GAMEOBJECTS
+        GameBoard createdGameBoard = GameBoardUtils.CreateGameState(gameBoard, false);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saveGame.dat"))) {
-            oos.writeObject(gameBoardToSave);
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Save game successful!");
-            alert.setHeaderText(null);
-            alert.setContentText("You have successfully saved the game!");
-
-            alert.showAndWait();
-
+            oos.writeObject(createdGameBoard);
+            DialogUtils.ShowSaveDialog();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void load() {
-
         newGame();
         //LOAD INTO RECOVERED GAME BOARD THE SAVED STATE
         GameBoard recoveredGameBoard;
-
         try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("saveGame.dat"))) {
             recoveredGameBoard = (GameBoard) oos.readObject();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Load game successful!");
-            alert.setHeaderText(null);
-            alert.setContentText("You have successfully loaded the game!");
-
-            alert.showAndWait();
-
+            DialogUtils.ShowLoadDialog();
             newGame();
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        gameBoard.setPlayerTurn(recoveredGameBoard.getPlayerTurn());
-        gameBoard.setNumberOfMoves(recoveredGameBoard.getNumberOfMoves());
-        gameBoard.setCHEATS(recoveredGameBoard.isCHEATS());
-        gameBoard.setSetUpDone(recoveredGameBoard.isSetUpDone());
-        gameBoard.setBluePlayer(recoveredGameBoard.getBluePlayer());
-        gameBoard.setRedPlayer(recoveredGameBoard.getRedPlayer());
-
-
-        for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < NUM_OF_COLS; j++) {
-                if (recoveredGameBoard.getGameBoardTiles()[i][j] != null) {
-                    if (recoveredGameBoard.getGameBoardTiles()[i][j].getGameObject() != null) {
-                        //PLACE GAME OBJECT
-                        gameBoard.getGameBoardTiles()[i][j].setGameObject(recoveredGameBoard.getGameBoardTiles()[i][j].getGameObject());
-                        //CHANGE BUTTON VIEW
-                        gameBoard.getGameBoardTiles()[i][j].getButton().setTextFill(stringToColor(recoveredGameBoard.getGameBoardTiles()[i][j].getGameObject().getStringColor()));
-                        gameBoard.getGameBoardTiles()[i][j].getButton().setText(recoveredGameBoard.getGameBoardTiles()[i][j].getGameObject().getIcon());
-                    }
-                }
-            }
-        }
-
-        refreshResources();
-        refreshPoints();
+        restoreGameboard(recoveredGameBoard);
     }
 
     public void generateDoc() {
         ReflectionUtils.generateDocReflection();
     }
 }
-

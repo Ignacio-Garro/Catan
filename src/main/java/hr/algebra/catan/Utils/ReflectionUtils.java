@@ -16,7 +16,7 @@ public final class ReflectionUtils {
 
     static public void generateDocReflection() {
         //C:\Users\ignac\Documents\GitHub\Catan\target
-        String location = "C:\\Users\\ignac\\Documents\\GitHub\\Catan\\target\\classes\\hr\\algebra\\catan";
+        String location = "target\\classes\\hr\\algebra\\catan";
 
         StringBuilder allInfo = new StringBuilder();
         allInfo.append("<div>");
