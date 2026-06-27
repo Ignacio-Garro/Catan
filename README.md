@@ -36,33 +36,6 @@ The app launches in one of two roles, chosen by command-line argument:
 
 Game state lives in a `GameBoard` model (players, tiles, dice, turn info). When a player acts, the updated board is serialized and pushed to the other instance, keeping both clients in sync. Chat runs independently over RMI.
 
-## Getting Started
-
-### Prerequisites
-- JDK [17+ — confirm your version]
-- JavaFX SDK [confirm version]
-- [Maven, if applicable]
-
-### Running
-
-The application takes a player role as its first argument:
-
-```bash
-# Start as server
-java -jar catan.jar SERVER
-
-# Start as client
-java -jar catan.jar CLIENT
-```
-
-> **Note:** Configuration (ports, host) is read from `conf.properties` via JNDI. Update the host/port values and the config path to match your setup before running.
-
-### Configuration
-Ports and host are defined in `NetworkConfiguration` and `conf.properties`:
-- Server port: `1989`
-- Client port: `1900`
-- Host: `localhost`
-
 ## Screenshots
 
 <img width="2040" height="1148" alt="catan" src="https://github.com/user-attachments/assets/eeb2241d-8629-441c-8513-cffaff3e5ace" />
